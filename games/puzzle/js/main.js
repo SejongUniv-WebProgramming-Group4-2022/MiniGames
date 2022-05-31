@@ -169,10 +169,6 @@ function shuffle(array) {
 
 // events
 
-document.addEventListener("DOMContentLoaded", function () {
-  $modal.container.style.display = "none";
-});
-
 container.addEventListener("dragstart", (e) => {
   if (!isPlaying) return;
   const obj = e.target;
@@ -220,3 +216,7 @@ async function postData(data) {
 
   return res.json();
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  $modal.container.style.display = "none";
+});

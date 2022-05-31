@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
 }
-
 .title {
   color: white;
   text-align: center;
@@ -36,109 +35,17 @@ body {
   background-color: rgba(15, 15, 15, 0.9);
 }
 
-.time-left {
-  font-size: 2rem;
-  margin-top: 2rem;
-  color: white;
-}
-
-ul {
-  margin-top: 1rem;
-  list-style: none;
-  border: 2px solid white;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-li {
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  border: 1px solid white;
-  background: url("https://placeimg.com/400/400/any");
-}
-
-.start-button {
-  background: black;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  margin-top: 1rem;
-}
-
-.game-text {
+#canvas {
+  background-color: black;
+  padding: 0;
+  margin: auto;
+  display: block;
+  width: 800px;
+  height: 600px;
   position: absolute;
-  font-size: 45px;
-  color: aquamarine;
-  text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
-  display: none;
-}
-
-.list0 {
-  background-position-x: 0px;
-  background-position-y: 0px;
-}
-
-.list1 {
-  background-position-x: -100px;
-  background-position-y: 0px;
-}
-.list2 {
-  background-position-x: -200px;
-  background-position-y: 0px;
-}
-.list3 {
-  background-position-x: -300px;
-  background-position-y: 0px;
-}
-.list4 {
-  background-position-x: 0px;
-  background-position-y: -100px;
-}
-.list5 {
-  background-position-x: -100px;
-  background-position-y: -100px;
-}
-
-.list6 {
-  background-position-x: -200px;
-  background-position-y: -100px;
-}
-.list7 {
-  background-position-x: -300px;
-  background-position-y: -100px;
-}
-.list8 {
-  background-position-x: -0px;
-  background-position-y: -200px;
-}
-.list9 {
-  background-position-x: -100px;
-  background-position-y: -200px;
-}
-.list10 {
-  background-position-x: -200px;
-  background-position-y: -200px;
-}
-.list11 {
-  background-position-x: -300px;
-  background-position-y: -200px;
-}
-.list12 {
-  background-position-x: -0px;
-  background-position-y: -300px;
-}
-.list13 {
-  background-position-x: -100px;
-  background-position-y: -300px;
-}
-.list14 {
-  background-position-x: -200px;
-  background-position-y: -300px;
-}
-.list15 {
-  background-position-x: -300px;
-  background-position-y: -300px;
+  top: 300px;
+  left: 0;
+  right: 0;
 }
 
 #back {
@@ -160,7 +67,7 @@ li {
   flex-direction: column;
 
   width: 100%;
-  height: 1850px;
+  height: 2200px;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   left: 0;

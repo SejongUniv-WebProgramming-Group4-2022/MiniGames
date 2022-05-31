@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Splat2K";
+}
+
+body {
+  height: 100%;
+  background-color: rgba(15, 15, 15, 0.9);
+  color: white;
+}
+
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 96px;
+  margin-bottom: 24px;
+}
+
+#content a {
+  display: inline-block;
+  border: 2px solid white;
+  text-decoration: none;
+  font-size: 48px;
+  padding: 16px 32px;
+  color: white;
+}
+
+.How-To-Play {
+  margin: 24px;
+  font-size: 36px;
+}
+
+p {
+  font-size: 24px;
+  line-height: 36px;
+}
+
+#AimPractice-playing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
