@@ -84,7 +84,7 @@ body > h1 {
 }
 
 .lboard_section {
-  width: 650px;
+  width: 500px;
   height: 400px;
   margin: 0px auto 0;
   background: #f94f62;
@@ -116,7 +116,7 @@ body > h1 {
 
 .lboard_wrap {
   position: absolute;
-  top: 160px;
+  top: 130px;
   left: 40px;
   background: #ffd300;
   width: 100%;

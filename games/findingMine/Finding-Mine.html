@@ -231,6 +231,20 @@
     </script>
   </head>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+    body {
+      background-color: black;
+      color: white;
+      font-family: "Quicksand", sans-serif;
+    }
+    h1 {
+      text-align: center;
+      font-size: 72px;
+    }
+    #left_time_box {
+      text-align: center;
+    }
+    
   .block{
     width:28px;
     height:28px;
@@ -244,7 +258,6 @@
     background-color: yellow;
   }
   #score{
-    color:black;
     font-size:20px;
   }
   #app{
@@ -262,14 +275,12 @@
   </style>
 
   <body>
-    <h1 style="text-align:center;">FIND-MINE</h1>
-    <div id="app" oncontextmenu=" false;" style="margin:100px auto 0 auto;">
-
-    </div>
+    <h1>FIND-MINE</h1>
+    <div id="app" oncontextmenu=" false;" style="margin:100px auto 0 auto;"></div>
     <div id="set">
       <button type="button" id="restart">RESTART</button><br>
-      <label>remaining mine</label> <span id="score"></span>
+      <label>remaining mine</label>
+       <span id="score"></span>
     </div>
-
   </body>
 </html>
