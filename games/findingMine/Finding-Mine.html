@@ -1,233 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title></title>
+    <meta charset="utf-8" />
+    <title>Finding Mine</title>
     <script>
       var randomArr = [];
       var checkArr = [];
       var score = 10;
-      window.onload = function(){
+      window.onload = function () {
         restartevent();
         randomNum();
         tagCreate();
         printPlag(score);
       };
 
-      function printPlag(n){
+      function printPlag(n) {
         document.querySelector("#score").innerText = n;
       }
 
-      function randomNum(){
-        for(var k =0; k<10; k++){
+      function randomNum() {
+        for (var k = 0; k < 10; k++) {
           var value = Math.random();
-          var result = Math.floor(value * 100); 
-          
-          if(randomArr.indexOf(result)>-1) k--;
+          var result = Math.floor(value * 100);
+
+          if (randomArr.indexOf(result) > -1) k--;
           else randomArr.push(result);
         }
       }
 
-      function tagCreate(){
+      function tagCreate() {
         var app = document.querySelector("#app");
 
-        for(var i = 0; i <100; i++){
-          var div = document.createElement('div');
-          div.setAttribute("id","block"+i);
-          div.setAttribute("class","block");
+        for (var i = 0; i < 100; i++) {
+          var div = document.createElement("div");
+          div.setAttribute("id", "block" + i);
+          div.setAttribute("class", "block");
 
-          
-          if(randomArr.indexOf(i)>-1) div.setAttribute("data-mine",true);
-          else div.setAttribute("data-mine",false);
-          div.setAttribute("isclicked",false);
-          div.setAttribute("minecheck",false);
-          div.onmousedown = function(){
+          if (randomArr.indexOf(i) > -1) div.setAttribute("data-mine", true);
+          else div.setAttribute("data-mine", false);
+          div.setAttribute("isclicked", false);
+          div.setAttribute("minecheck", false);
+          div.onmousedown = function () {
             var isClicked = event.srcElement.getAttribute("isclicked");
-            if(isClicked=="false"){ 
+            if (isClicked == "false") {
               mouseEvent(event);
             }
-          }
+          };
           app.appendChild(div);
         }
 
-       
-        for(i=0; i<100; i++){
-          var div = document.querySelector("#block"+i);
-          div.setAttribute("data-minenum",returnMineNum(div,false));
+        for (i = 0; i < 100; i++) {
+          var div = document.querySelector("#block" + i);
+          div.setAttribute("data-minenum", returnMineNum(div, false));
         }
       }
 
-      function mouseEvent(event){
+      function mouseEvent(event) {
         var btn = event.button;
         var block = event.srcElement;
-        var minecheck= event.srcElement.getAttribute("minecheck");
-        var idNum = block.getAttribute("id").replace("block","");
-        if(btn!=0 && btn!=undefined){
-          if(minecheck =="false"){ 
+        var minecheck = event.srcElement.getAttribute("minecheck");
+        var idNum = block.getAttribute("id").replace("block", "");
+        if (btn != 0 && btn != undefined) {
+          if (minecheck == "false") {
             printPlag(--score);
-            block.setAttribute("style",
-                "background-image:url('image/btnchecked.png');"+
-                "background-repeat:no-repeat;"+
+            block.setAttribute(
+              "style",
+              "background-image:url('image/btnchecked.png');" +
+                "background-repeat:no-repeat;" +
                 "background-size:30px;"
             );
-            block.setAttribute("minecheck","true");
-            if(gameovertest()){
+            block.setAttribute("minecheck", "true");
+            if (gameovertest()) {
               alert("you find all mines.");
             }
-          }else{ 
+          } else {
             printPlag(++score);
-            block.setAttribute("style","background-color:grey;");
-            block.setAttribute("minecheck","false");
+            block.setAttribute("style", "background-color:grey;");
+            block.setAttribute("minecheck", "false");
           }
+        } else {
+          block.setAttribute("isclicked", true);
+          block.setAttribute("style", "background-color:#A9A9A9;");
+          if (block.getAttribute("data-mine") == "true") {
+            block.setAttribute("style", "background-color:red;");
+            allmineshow(block);
 
-        }else{ 
-          block.setAttribute("isclicked",true);
-          block.setAttribute("style","background-color:#A9A9A9;");
-          if(block.getAttribute("data-mine") == "true"){
-            
-
-            block.setAttribute("style","background-color:red;")
-            allmineshow(block); 
-
-           
-            setTimeout(function(){
-              if(confirm("mine is boom, restart?"))
-                document.querySelector("#restart").click();
+            setTimeout(function () {
+              if (confirm("mine is boom, restart?")) document.querySelector("#restart").click();
               else {
                 gameover();
               }
-            },100);
-          }else{
-            
+            }, 100);
+          } else {
             var minenum = block.getAttribute("data-minenum");
-            if(minenum>0)
-              block.innerText = minenum;
-           
-            else{
-              returnMineNum(block,true);
+            if (minenum > 0) block.innerText = minenum;
+            else {
+              returnMineNum(block, true);
             }
           }
         }
       }
-     
-      function returnMineNum(block,flag){
-        var result =0;
+
+      function returnMineNum(block, flag) {
+        var result = 0;
         var id = block.getAttribute("id");
-        id = id.replace("block","");
+        id = id.replace("block", "");
         var me = parseInt(id);
 
-        var uplinenum = me-11; 
-        var melinenum = me-1; 
-        var downlinenum = me + 9; 
+        var uplinenum = me - 11;
+        var melinenum = me - 1;
+        var downlinenum = me + 9;
 
-        for(var i = 0; i < 3; i++){
-
-         
-          var overzero = (uplinenum >= 0); 
-          var uplast = (Math.floor(me/10) - Math.floor(uplinenum/10) == 1);// me의 앞자리에서 uplinenum의 앞자리를 빼면 1 나와야한다.
-          if(overzero && uplast){
-            var nowUpBlock = document.querySelector("#block"+uplinenum);
-            if(nowUpBlock.getAttribute("data-mine")=="true"){
+        for (var i = 0; i < 3; i++) {
+          var overzero = uplinenum >= 0;
+          var uplast = Math.floor(me / 10) - Math.floor(uplinenum / 10) == 1; // me의 앞자리에서 uplinenum의 앞자리를 빼면 1 나와야한다.
+          if (overzero && uplast) {
+            var nowUpBlock = document.querySelector("#block" + uplinenum);
+            if (nowUpBlock.getAttribute("data-mine") == "true") {
               result++;
             }
 
-            if(flag && (nowUpBlock.getAttribute("data-minenum") == "0" || nowUpBlock.getAttribute("data-mine") =="false")){
-              var CustomEvent = document.createEvent('Event');
-              CustomEvent.initEvent('mousedown',false,true);
+            if (
+              flag &&
+              (nowUpBlock.getAttribute("data-minenum") == "0" ||
+                nowUpBlock.getAttribute("data-mine") == "false")
+            ) {
+              var CustomEvent = document.createEvent("Event");
+              CustomEvent.initEvent("mousedown", false, true);
               nowUpBlock.dispatchEvent(CustomEvent);
             }
           }
 
-         
-          var notme = (melinenum !=me);
-          var melast = (Math.floor(me/10) - Math.floor(melinenum/10) == 0);
-          if(melast && notme){
-            var noewmeblock = document.querySelector("#block"+melinenum);
-            if(noewmeblock.getAttribute("data-mine")=="true"){
+          var notme = melinenum != me;
+          var melast = Math.floor(me / 10) - Math.floor(melinenum / 10) == 0;
+          if (melast && notme) {
+            var noewmeblock = document.querySelector("#block" + melinenum);
+            if (noewmeblock.getAttribute("data-mine") == "true") {
               result++;
             }
 
-            if(flag && (noewmeblock.getAttribute("data-minenum") == "0" || noewmeblock.getAttribute("data-mine") =="false")){
-              var CustomEvent = document.createEvent('Event');
-              CustomEvent.initEvent('mousedown',false,true);
+            if (
+              flag &&
+              (noewmeblock.getAttribute("data-minenum") == "0" ||
+                noewmeblock.getAttribute("data-mine") == "false")
+            ) {
+              var CustomEvent = document.createEvent("Event");
+              CustomEvent.initEvent("mousedown", false, true);
               noewmeblock.dispatchEvent(CustomEvent);
             }
           }
 
-    
-          var underhun = (downlinenum <100);
-          var downlast = (Math.floor(me/10) - Math.floor(downlinenum/10) == -1);
-          if(underhun && downlast){
-            var noewdownblock = document.querySelector("#block"+downlinenum);
-            if(noewdownblock.getAttribute("data-mine")=="true"){
+          var underhun = downlinenum < 100;
+          var downlast = Math.floor(me / 10) - Math.floor(downlinenum / 10) == -1;
+          if (underhun && downlast) {
+            var noewdownblock = document.querySelector("#block" + downlinenum);
+            if (noewdownblock.getAttribute("data-mine") == "true") {
               result++;
             }
 
-            if(flag && (noewdownblock.getAttribute("data-minenum") == "0" || noewdownblock.getAttribute("data-mine") =="false")){
-              var CustomEvent = document.createEvent('Event');
-              CustomEvent.initEvent('mousedown',false,true);
+            if (
+              flag &&
+              (noewdownblock.getAttribute("data-minenum") == "0" ||
+                noewdownblock.getAttribute("data-mine") == "false")
+            ) {
+              var CustomEvent = document.createEvent("Event");
+              CustomEvent.initEvent("mousedown", false, true);
               noewdownblock.dispatchEvent(CustomEvent);
             }
           }
-        
-          uplinenum++; melinenum++; downlinenum++;
+
+          uplinenum++;
+          melinenum++;
+          downlinenum++;
         }
         return result;
       }
 
-      function restartevent(){
-        document.querySelector("#restart").addEventListener("click",function(){
+      function restartevent() {
+        document.querySelector("#restart").addEventListener("click", function () {
           var app = document.querySelector("#app");
           var appLength = app.childElementCount;
-          for(var i =0; i<appLength; i++){
+          for (var i = 0; i < appLength; i++) {
             app.removeChild(app.children[0]);
           }
-          randomArr=[];
+          randomArr = [];
           randomNum();
           tagCreate();
-          score=10;
+          score = 10;
           printPlag(score);
         });
       }
 
-      function gameovertest(){
+      function gameovertest() {
         var result = 0;
-        for(var i =0; i<randomArr.length; i++){
-          var id ="#block"+randomArr[i];
-          if(document.querySelector(id).getAttribute("minecheck") == "true"){
+        for (var i = 0; i < randomArr.length; i++) {
+          var id = "#block" + randomArr[i];
+          if (document.querySelector(id).getAttribute("minecheck") == "true") {
             result++;
-          }else{
+          } else {
             return false;
           }
         }
         return result == 10;
       }
 
-      function gameover(){
+      function gameover() {
         //모든 이벤트 회수
-        for(var i =0; i<100; i++){
+        for (var i = 0; i < 100; i++) {
           document.querySelector("#app").children[i].onmousedown = null;
         }
       }
-      function allmineshow(clickedblock){
+      function allmineshow(clickedblock) {
         var block = document.querySelector("#app").children;
-        for(var i=0; i<block.length; i++){
-          if(block[i].getAttribute("data-mine")=="true"){
-  
-            block[i].setAttribute("style",
-                "background-image:url('image/btnmine.png');"+
-                "background-repeat:no-repeat;"+
+        for (var i = 0; i < block.length; i++) {
+          if (block[i].getAttribute("data-mine") == "true") {
+            block[i].setAttribute(
+              "style",
+              "background-image:url('image/btnmine.png');" +
+                "background-repeat:no-repeat;" +
                 "background-size:30px;"
             );
           }
-          if(block[i] == clickedblock){
-            clickedblock.setAttribute("style","background-image:url('image/btnclickmine.PNG');"
-                          +"background-repeat:no-repeat;"+
-                          "background-size:30px;");
+          if (block[i] == clickedblock) {
+            clickedblock.setAttribute(
+              "style",
+              "background-image:url('image/btnclickmine.PNG');" +
+                "background-repeat:no-repeat;" +
+                "background-size:30px;"
+            );
           }
         }
       }
-
     </script>
   </head>
   <style>
@@ -244,43 +247,42 @@
     #left_time_box {
       text-align: center;
     }
-    
-  .block{
-    width:28px;
-    height:28px;
-    border:1px solid black;
-    float:left;
-    background:grey;
-    font-weight: bold;
 
-  }
-  .block:hover{
-    background-color: yellow;
-  }
-  #score{
-    font-size:20px;
-  }
-  #app{
-    width:300px;
-    height:300px;
-    border:1px solid black;
-    text-align: center;
-  }
-  #set{
-    padding:30px;
-    width:100px;
-    height:100px;
-    margin:0 auto;
-  }
+    .block {
+      width: 28px;
+      height: 28px;
+      border: 1px solid black;
+      float: left;
+      background: grey;
+      font-weight: bold;
+    }
+    .block:hover {
+      background-color: yellow;
+    }
+    #score {
+      font-size: 20px;
+    }
+    #app {
+      width: 300px;
+      height: 300px;
+      border: 1px solid black;
+      text-align: center;
+    }
+    #set {
+      padding: 30px;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
+    }
   </style>
 
   <body>
     <h1>FIND-MINE</h1>
-    <div id="app" oncontextmenu=" false;" style="margin:100px auto 0 auto;"></div>
+    <div id="app" oncontextmenu=" false;" style="margin: 100px auto 0 auto"></div>
     <div id="set">
-      <button type="button" id="restart">RESTART</button><br>
+      <button type="button" id="restart">RESTART</button><br />
       <label>remaining mine</label>
-       <span id="score"></span>
+      <span id="score"></span>
     </div>
   </body>
 </html>
